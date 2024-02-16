@@ -1,12 +1,18 @@
-import { getRandomSeed } from "bun:jsc";
 import { otps } from "../utils/schema";
 import { db } from "../db";
+import { eq } from "drizzle-orm";
 
-const generateOTP = (): number => {
-    let num = getRandomSeed();
-    return num%1000000;
+export const generateOTP = (): number => {
+    let num = Math.random()*987654321;
+    return Math.floor(num%1000000);
 }
 
-const saveOTP = async (id: number) => {
-    await db.insert(otps).values({ userId: id, otp: generateOTP()})
+export const saveOTP = async (id: string) => {
+    const otp = generateOTP();
+    const should = await db.select().from(otps).where(eq(otps.email, id));
+    if(should.length==0)
+        await db.insert(otps).values({ email: id, otp: otp});
+    else 
+        await db.update(otps).set({otp: otp}).where(eq(otps.email, id));
+    return otp;
 }

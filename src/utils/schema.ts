@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { integer, text, blob, sqliteTable, IntegerConfig } from "drizzle-orm/sqlite-core";
+import { integer, text, blob, sqliteTable } from "drizzle-orm/sqlite-core";
   
 export const users = sqliteTable("users", {
     id: integer("id").primaryKey({ autoIncrement: true }),
@@ -32,7 +32,7 @@ export const messages = sqliteTable("messages", {
 });
 
 export const otps = sqliteTable("otps", {
-    userId : integer("user_id").unique().notNull().references(() => users.id),
+    email : text("email").notNull().primaryKey(),
     otp : integer("otp").notNull(),
     timeStamp : integer("time_stamp", { mode: "timestamp"}).default(sql`CURRENT_TIMESTAMP`)
 });
