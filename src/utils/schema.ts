@@ -31,6 +31,14 @@ export const messages = sqliteTable("messages", {
     message : text("message").notNull()
 });
 
+export const unsent = sqliteTable("unsent", {
+    chatId : integer("chat_id").references(() => chats.id),
+    sentAt : integer("sent_at", { mode: "timestamp"}).default(sql`CURRENT_TIMESTAMP`),
+    senderId : integer("sender_at").references(() => users.id),
+    recieverId : integer("reciever_at").references(() => users.id),
+    message : text("message").notNull()
+});
+
 export const otps = sqliteTable("otps", {
     email : text("email").notNull().primaryKey(),
     otp : integer("otp").notNull(),

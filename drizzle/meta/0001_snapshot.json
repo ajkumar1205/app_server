@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "471426a6-3c1e-4d9c-9ab7-3048ccd90949",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "d7c91cba-336b-449e-89a6-6c424deddfe9",
+  "prevId": "471426a6-3c1e-4d9c-9ab7-3048ccd90949",
   "tables": {
     "chats": {
       "name": "chats",
@@ -232,6 +232,91 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "unsent": {
+      "name": "unsent",
+      "columns": {
+        "chat_id": {
+          "name": "chat_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sent_at": {
+          "name": "sent_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "sender_at": {
+          "name": "sender_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "reciever_at": {
+          "name": "reciever_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "unsent_chat_id_chats_id_fk": {
+          "name": "unsent_chat_id_chats_id_fk",
+          "tableFrom": "unsent",
+          "tableTo": "chats",
+          "columnsFrom": [
+            "chat_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "unsent_sender_at_users_id_fk": {
+          "name": "unsent_sender_at_users_id_fk",
+          "tableFrom": "unsent",
+          "tableTo": "users",
+          "columnsFrom": [
+            "sender_at"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "unsent_reciever_at_users_id_fk": {
+          "name": "unsent_reciever_at_users_id_fk",
+          "tableFrom": "unsent",
+          "tableTo": "users",
+          "columnsFrom": [
+            "reciever_at"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
