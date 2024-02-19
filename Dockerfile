@@ -1,4 +1,10 @@
-FROM oven/bun
+FROM ubuntu:latest
+
+RUN apt-get update && apt install curl && apt-get update
+
+RUN curl -fsSL https://bun.sh/install | bash
+RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && \
+    source ~/.bashrc && nvm install node
 
 WORKDIR /app
 
